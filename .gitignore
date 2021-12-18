@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# aded by John McHale 18/12/2021 
+# exclude ALL appsettings.{environment}.json files except the main appsettings.json file 
+appsettings.*.json 
+
 # User-specific files
 *.rsuser
 *.suo
