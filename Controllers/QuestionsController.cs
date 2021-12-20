@@ -59,7 +59,15 @@ namespace QandA.Controllers
         public ActionResult<QuestionGetSingleResponse> PostQuestion(QuestionPostRequest questionPostRequest)
         {
             // call the data repository to save the question
-            var savedQuestion = _dataRepository.PostQuestion(questionPostRequest);
+            var savedQuestion = _dataRepository.PostQuestion(new
+                    QuestionPostFullRequest
+                    {
+                        Title = questionPostRequest.Title,
+                        Content = questionPostRequest.Content,
+                        UserId = "1",
+                        UserName = "bob.test@test.com",
+                        Created = DateTime.UtcNow
+                    });
 
             // return HTTP status code 201
             return CreatedAtAction(nameof(GetQuestion),
@@ -89,6 +97,7 @@ namespace QandA.Controllers
             // call the data repository with the updated question model to update the question in the database
             // return the saved question
             var savedQuestion = _dataRepository.PutQuestion(questionId, questionPutRequest);
+
             return savedQuestion;
         }
 
@@ -101,6 +110,7 @@ namespace QandA.Controllers
                 return NotFound();
             }
             _dataRepository.DeleteQuestion(questionId);
+
             return NoContent();
         }
 
@@ -113,9 +123,18 @@ namespace QandA.Controllers
                 return NotFound();
             }
             
-            var savedAnswer = _dataRepository.PostAnswer(answerPostRequest);
+            var savedAnswer = _dataRepository.PostAnswer(new
+                    AnswerPostFullRequest
+                    {
+                        QuestionId = answerPostRequest.QuestionId.Value,
+                        Content = answerPostRequest.Content,
+                        UserId = "1",
+                        UserName = "bob.test@test.com",
+                        Created = DateTime.UtcNow
+                    }
+                );
+
             return savedAnswer;
         }
-
     }
 }
