@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QandA.Data.Models
 {
@@ -13,5 +14,7 @@ namespace QandA.Data.Models
         public string UserName { get; set; }
 
         public DateTime Created { get; set; }
+
+        public List<AnswerGetResponse> Answers { get; set; }
     }
 }
