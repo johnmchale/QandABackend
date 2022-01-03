@@ -23,7 +23,7 @@ namespace QandA.Controllers
         private readonly IHttpClientFactory _clientFactory;
         private readonly string _auth0UserInfo;
 
-        public QuestionsController(IDataRepository dataRepository, 
+        public QuestionsController(IDataRepository dataRepository,
                                    IQuestionCache questionCache,
                                    IHttpClientFactory clientFactory,
                                    IConfiguration configuration)
@@ -36,9 +36,9 @@ namespace QandA.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<QuestionGetManyResponse>> GetQuestions(string search,
-                                                                 bool includeAnswers,
-                                                                 int page = 1,
-                                                                 int pageSize = 20)
+                                                                             bool includeAnswers,
+                                                                             int  page = 1,
+                                                                             int  pageSize = 20)
         {
             if (string.IsNullOrEmpty(search))
             {
@@ -54,8 +54,8 @@ namespace QandA.Controllers
             else
             {
                 return await _dataRepository.GetQuestionsBySearchWithPaging(search,
-                                                            page,
-                                                                      pageSize);
+                                                                   page,
+                                                                            pageSize);
             }
         }
 
@@ -111,7 +111,7 @@ namespace QandA.Controllers
 
         [Authorize(Policy = "MustBeQuestionAuthor")]
         [HttpPut("{questionId}")]
-        public async Task<ActionResult<QuestionGetSingleResponse>> PutQuestion(int questionId, 
+        public async Task<ActionResult<QuestionGetSingleResponse>> PutQuestion(int questionId,
                                                                                QuestionPutRequest questionPutRequest)
         {
             // get the question from the data repository
@@ -182,7 +182,7 @@ namespace QandA.Controllers
         private async Task<string> GetUserName()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, _auth0UserInfo);
-            
+
             request.Headers.Add(
                 "Authorization",
                 Request.Headers["Authorization"].First());
